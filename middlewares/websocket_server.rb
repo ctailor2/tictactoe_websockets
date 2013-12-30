@@ -17,7 +17,7 @@ class Server
         ws.send(event.data)
       end
 
-      we.on :message do |event|
+      ws.on :message do |event|
       	p [:message, event.data]
       	@clients.each { |client| client.send(event.data) }
       end
