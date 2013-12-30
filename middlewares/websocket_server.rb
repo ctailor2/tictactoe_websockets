@@ -14,6 +14,7 @@ class Server
       ws.on :open do |event|
         p [:open, ws.object_id]
         @clients << ws
+        ws.send(event.data)
       end
 
       we.on :message do |event|
