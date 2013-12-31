@@ -1,4 +1,5 @@
 require 'faye/websocket'
+require 'json'
 
 class Server
 	KEEPALIVE_TIME = 15 # in seconds
@@ -14,7 +15,8 @@ class Server
       ws.on :open do |event|
         p [:open, ws.object_id]
         @clients << ws
-        ws.send(event.data)
+        data = {:num_clients => @clients.length}
+        ws.send(data.to_json)
       end
 
       ws.on :message do |event|

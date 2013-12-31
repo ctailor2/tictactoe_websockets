@@ -1,3 +1,4 @@
+@javascript
 Feature: player starts game
 
 	As a player
