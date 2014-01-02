@@ -19,3 +19,7 @@ end
 Then(/^not "(.*?)"$/) do |message|
 	expect(page).not_to have_text(message)
 end
+
+Then(/^a new game should start$/) do
+	game = Game.new
+end
