@@ -12,6 +12,7 @@ Feature: users enter lobby
 		And I enter the lobby
 		Then I should see "Welcome to TicTacToe!"
 		And I should see "Waiting for Challenger"
+		And a new game should not have started
 
 		When I am in UserB's browser
 		And I enter the lobby

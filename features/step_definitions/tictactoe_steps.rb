@@ -21,6 +21,11 @@ Then(/^not "(.*?)"$/) do |message|
 end
 
 
+Then(/^a new game should not have started$/) do
+	server = page.driver.app
+	expect(server.game).to be_nil
+end
+
 Then(/^a new game should have started$/) do
 	server = page.driver.app
 	expect(server.game).to be_an_instance_of(Game)
