@@ -7,6 +7,8 @@ ws.onmessage = function(message) {
 	console.log(data)
 	if (data.num_clients < 2){
 		$(".status").text("Waiting for Challenger");
+	} else if (data.turn_message) {
+		$(".turn-message").text(data.turn_message);
 	}
 }
 
