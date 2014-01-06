@@ -4,7 +4,7 @@ describe Server do
 	let(:server) { Server.new(double('app')) }
 	before do
 		2.times do |i|
-			server.clients << double("client#{i + 1}")
+			server.clients << double("client#{i + 1}").as_null_object
 		end
 	end
 
