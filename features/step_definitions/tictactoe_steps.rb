@@ -20,6 +20,8 @@ Then(/^not "(.*?)"$/) do |message|
 	expect(page).not_to have_text(message)
 end
 
-Then(/^a new game should start$/) do
-	game = Game.new
+
+Then(/^a new game should have started$/) do
+	server = page.driver.app
+	expect(server.game).to be_an_instance_of(Game)
 end

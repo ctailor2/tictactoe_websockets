@@ -17,7 +17,7 @@ Feature: users enter lobby
 		And I enter the lobby
 		Then I should see "Welcome to TicTacToe!"
 		But not "Waiting for Challenger"
-		And a new game should start
+		And a new game should have started
 		And I should see "Opponent's Turn"
 
 		When I am in UserA's browser
