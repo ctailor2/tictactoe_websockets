@@ -3,10 +3,13 @@ require 'json'
 
 class Server
 	KEEPALIVE_TIME = 15 # in seconds
+  attr_reader :clients
+  attr_accessor :game
 
 	def initialize(app)
 		@app = app
 		@clients = []
+    @game = nil
 	end
 
 	def call(env)
@@ -17,6 +20,7 @@ class Server
         @clients << ws
         data = {:num_clients => @clients.length}
         ws.send(data.to_json)
+        new_game if new_game_req_met?
       end
 
       ws.on :message do |event|
@@ -35,4 +39,12 @@ class Server
 			@app.call(env)
 		end
 	end
+
+  def new_game_req_met?
+    clients.length == 2
+  end
+
+  def new_game
+    self.game = Game.new(clients)
+  end
 end
