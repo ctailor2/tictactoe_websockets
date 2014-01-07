@@ -17,8 +17,15 @@ ws.onmessage = function(message) {
 			$(".game-board").show('slow').css('display', 'inline-block');
 		}
 	}
+	else if (data.hasOwnProperty('marker_message')) {
+		var id = data.marker_message
+		$("#" + id).text("X");
+	}
 }
 
-$(document).click(function(event) {
-	ws.send(JSON.stringify({handle: 'ctailor2', text: 'waddup homie?!'}))
-});
+$(function() {
+	$(".space").click(function() {
+		var id = parseInt(this.id)
+		ws.send(JSON.stringify({ 'marker_message' : id }))
+	});
+})
