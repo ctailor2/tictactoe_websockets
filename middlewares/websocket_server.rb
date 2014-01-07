@@ -23,8 +23,7 @@ class Server
       end
 
       ws.on :message do |event|
-      	p [:message, event.data]
-      	clients.each { |client| client.send(event.data) }
+        game.receive_data(event.data)
       end
 
       ws.on :close do |event|

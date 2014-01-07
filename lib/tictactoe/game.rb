@@ -22,4 +22,10 @@ class Game
 			player.send({ label => data }.to_json)
 		end
 	end
+
+	def receive_data(data)
+		parsed_data = JSON.parse(data, :symbolize_names => true)
+		space_number = parsed_data[:marker_message]
+		send_data(:marker_message, space_number, players)
+	end
 end
