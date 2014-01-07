@@ -26,7 +26,7 @@ describe Server do
 
 	describe "#new_game" do
 		it "clears the client's status messages" do
-			expect(server).to receive(:update_status).with('', server.clients)
+			expect(server).to receive(:send_data).with(:status, '', server.clients)
 			server.new_game
 		end
 
@@ -40,23 +40,25 @@ describe Server do
 		end
 	end
 
-	describe "#update_status" do
+	describe "#send_data" do
 		context "when a single client is specified" do
-			it "sends the specified status message to the specified client(s)" do
+			it "sends the specified data to the specified client(s)" do
+				data_label = :status
+				data = 'message for single client'
 				client = server.clients.first
-				message = "Test message for single client"
-				expect(client).to receive(:send).with({:status => message}.to_json)
-				server.update_status(message, client)
+				expect(client).to receive(:send).with({ data_label => data }.to_json)
+				server.send_data(data_label, data, client)
 			end
 		end
 
 		context "when a collection of one or more clients is specified" do
-			it "sends the specified status message to the specified client(s)" do
+			it "sends the specified data to the specified client(s)" do
+				data_label = :status
+				data = 'message for multiple clients'
 				clients = server.clients
-				message = "Test message for multiple clients"
-				expect(clients.first).to receive(:send).with({:status => message}.to_json)
-				expect(clients.last).to receive(:send).with({:status => message}.to_json)
-				server.update_status(message, clients)
+				expect(clients.first).to receive(:send).with({ data_label => data }.to_json)
+				expect(clients.last).to receive(:send).with({ data_label => data }.to_json)
+				server.send_data(data_label, data, clients)
 			end
 		end
 	end

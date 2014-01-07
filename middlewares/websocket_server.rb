@@ -19,7 +19,7 @@ class Server
         p [:open, ws.object_id]
         clients << ws
         new_game if new_game_req_met?
-        update_status('Waiting for Challenger', ws) unless game
+        send_data(:status, 'Waiting for Challenger', ws) unless game
       end
 
       ws.on :message do |event|
@@ -44,13 +44,13 @@ class Server
   end
 
   def new_game
-    update_status('', clients)
+    send_data(:status, '', clients)
     self.game = Game.new(clients)
   end
 
-  def update_status(message, *clients)
+  def send_data(data_label, data, *clients)
     clients.flatten.each do |client|
-      client.send({ :status => message }.to_json)
+      client.send({ data_label => data }.to_json)
     end
   end
 end
