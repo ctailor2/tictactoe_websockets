@@ -6,7 +6,7 @@ describe Game do
 		2.times do |i|
 			clients << double("client#{i + 1}").as_null_object
 		end
-		Game.new(clients)
+		Game.new(clients).as_null_object
 	end
 
 	describe "#initialize" do
@@ -17,14 +17,14 @@ describe Game do
 
 	describe "#turn!" do
 		it "sends the message 'Your Turn' to the first player" do
-			data = { :turn_message => 'Your Turn' }
-			expect(game.players.first).to receive(:send).with(data.to_json)
+			first_player = game.players.first
+			expect(game).to receive(:send_data).with(:turn_message, 'Your Turn', first_player)
 			game.turn!
 		end
 
 		it "sends the message 'Opponent's Turn' to the second player" do
-			data = { :turn_message => "Opponent's Turn" }
-			expect(game.players.last).to receive(:send).with(data.to_json)
+			second_player = game.players.last
+			expect(game).to receive(:send_data).with(:turn_message, "Opponent's Turn", second_player)
 			game.turn!
 		end
 
@@ -36,9 +36,7 @@ describe Game do
 
 	describe "#show" do
 		it "sends the display message 'Show' to both players" do
-			data = { :display_message => 'show' }
-			expect(game.players.first).to receive(:send).with(data.to_json)
-			expect(game.players.last).to receive(:send).with(data.to_json)
+			expect(game).to receive(:send_data).with(:display_message, 'show', game.players)
 			game.show
 		end
 	end
