@@ -13,12 +13,14 @@ Feature: users enter lobby
 		Then I should see "Welcome to TicTacToe!"
 		And I should see "Waiting for Challenger"
 		And a new game should not have started
+		But I should not see the game board
 
 		When I am in UserB's browser
 		And I enter the lobby
 		Then I should see "Welcome to TicTacToe!"
 		But not "Waiting for Challenger"
 		And a new game should have started
+		And I should see the game board
 		And I should see "Opponent's Turn"
 
 		When I am in UserA's browser

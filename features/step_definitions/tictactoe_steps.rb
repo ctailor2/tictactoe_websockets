@@ -20,6 +20,14 @@ Then(/^not "(.*?)"$/) do |message|
 	expect(page).not_to have_text(message)
 end
 
+Then(/^I should not see the game board$/) do
+	expect(page).not_to have_selector('.space', :count => 9)
+end
+
+Then(/^I should see the game board$/) do
+	expect(page).to have_selector('.space', :count => 9)
+end
+
 Then(/^a new game should not have started$/) do
 	server = page.driver.app
 	expect(server.game).to be_nil
