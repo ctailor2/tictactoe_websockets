@@ -72,6 +72,11 @@ describe Game do
 				expect(game).to receive(:send_data).with(:marker_message, 2, game.players)
 				game.receive_data(data)
 			end
+
+			it "completes the turn" do
+				expect(game).to receive(:turn!)
+				game.receive_data(data)
+			end
 		end
 	end
 end
