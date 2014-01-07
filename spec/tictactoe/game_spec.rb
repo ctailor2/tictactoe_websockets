@@ -33,4 +33,13 @@ describe Game do
 			game.turn!
 		end
 	end
+
+	describe "#show" do
+		it "sends the display message 'Show' to both players" do
+			data = { :display_message => 'show' }
+			expect(game.players.first).to receive(:send).with(data.to_json)
+			expect(game.players.last).to receive(:send).with(data.to_json)
+			game.show
+		end
+	end
 end
