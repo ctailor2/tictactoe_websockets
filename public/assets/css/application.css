@@ -1,7 +1,41 @@
 .container {
 	margin: 20px auto;
-	width: 600px;
+	width: 620px;
 	padding: 0px 20px 20px 20px;
 	border: 1px dotted black;
 	text-align: center;
+}
+
+.status {
+	height: 20px;
+}
+
+.turn-message {
+	height: 20px;
+}
+
+.game-board {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: none;
+}
+
+.space {
+	height: 200px;
+	width: 200px;
+	float: left;
+}
+
+.vert-border {
+	height: 200px;
+	width: 10px;
+	background-color: black;
+	float: left;
+}
+
+.horiz-border {
+	height: 10px;
+	width: 620px;
+	background-color: black;
+	float: left;
 }

@@ -11,6 +11,12 @@ ws.onmessage = function(message) {
 	else if (data.hasOwnProperty('turn_message')) {
 		$(".turn-message").text(data.turn_message);
 	}
+	else if (data.hasOwnProperty('display_message')) {
+		var message = data.display_message
+		if (message === 'show') {
+			$(".game-board").show('slow').css('display', 'inline-block');
+		}
+	}
 }
 
 $(document).click(function(event) {
