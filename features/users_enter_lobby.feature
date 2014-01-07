@@ -25,3 +25,4 @@ Feature: users enter lobby
 
 		When I am in UserA's browser
 		Then I should see "Your Turn"
+		But not "Waiting for Challenger"
