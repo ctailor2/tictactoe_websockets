@@ -18,9 +18,9 @@ class Server
       ws.on :open do |event|
         p [:open, ws.object_id]
         @clients << ws
-        data = {:num_clients => @clients.length}
-        ws.send(data.to_json)
         new_game if new_game_req_met?
+        data = {:status => 'Waiting for Challenger'}
+        ws.send(data.to_json) unless game
       end
 
       ws.on :message do |event|

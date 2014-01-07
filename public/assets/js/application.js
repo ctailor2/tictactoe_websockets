@@ -5,8 +5,8 @@ var ws = new WebSocket(uri);
 ws.onmessage = function(message) {
 	var data = JSON.parse(message.data)
 	console.log(data)
-	if (data.num_clients < 2){
-		$(".status").text("Waiting for Challenger");
+	if (data.status){
+		$(".status").text(data.status);
 	} else if (data.turn_message) {
 		$(".turn-message").text(data.turn_message);
 	}
