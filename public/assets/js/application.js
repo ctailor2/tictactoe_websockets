@@ -5,9 +5,10 @@ var ws = new WebSocket(uri);
 ws.onmessage = function(message) {
 	var data = JSON.parse(message.data)
 	console.log(data)
-	if (data.status){
+	if (data.hasOwnProperty('status')){
 		$(".status").text(data.status);
-	} else if (data.turn_message) {
+	}
+	else if (data.hasOwnProperty('turn_message')) {
 		$(".turn-message").text(data.turn_message);
 	}
 }
