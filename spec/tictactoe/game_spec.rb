@@ -48,8 +48,9 @@ describe Game do
 			it "sends the specified data to the specified player(s)" do
 				label = :data_label
 				data = 'message for single player'
-				expect(game.players.first).to receive(:send).with({ label => data }.to_json)
-				game.send_data(label, data, game.players.first)
+				player = game.players.first
+				expect(player).to receive(:send).with({ label => data }.to_json)
+				game.send_data(label, data, player)
 			end
 		end
 
@@ -57,9 +58,10 @@ describe Game do
 			it "sends the specified data to the specified player(s)" do
 				label = :data_label
 				data = 'message for multiple players'
-				expect(game.players.first).to receive(:send).with({ label => data }.to_json)
-				expect(game.players.last).to receive(:send).with({ label => data }.to_json)
-				game.send_data(label, data, game.players)
+				players = game.players
+				expect(players.first).to receive(:send).with({ label => data }.to_json)
+				expect(players.last).to receive(:send).with({ label => data }.to_json)
+				game.send_data(label, data, players)
 			end
 		end
 	end
