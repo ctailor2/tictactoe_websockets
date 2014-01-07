@@ -8,14 +8,18 @@ class Game
 	end
 
 	def turn!
-		players.first.send({ :turn_message => 'Your Turn' }.to_json)
-		players.last.send({ :turn_message => "Opponent's Turn" }.to_json)
+		send_data(:turn_message, 'Your Turn', players.first)
+		send_data(:turn_message, "Opponent's Turn", players.last)
 		players.rotate!
 	end
 
 	def show
-		players.each do |player|
-			player.send({ :display_message => 'show' }.to_json)
+		send_data(:display_message, 'show', players)
+	end
+
+	def send_data(label, data, *players)
+		players.flatten.each do |player|
+			player.send({ label => data }.to_json)
 		end
 	end
 end

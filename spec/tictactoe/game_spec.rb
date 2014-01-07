@@ -42,4 +42,25 @@ describe Game do
 			game.show
 		end
 	end
+
+	describe "#send_data" do
+		context "when a single player is specified" do
+			it "sends the specified data to the specified player(s)" do
+				label = :data_label
+				data = 'message for single player'
+				expect(game.players.first).to receive(:send).with({ label => data }.to_json)
+				game.send_data(label, data, game.players.first)
+			end
+		end
+
+		context "when a collection of players is specified" do
+			it "sends the specified data to the specified player(s)" do
+				label = :data_label
+				data = 'message for multiple players'
+				expect(game.players.first).to receive(:send).with({ label => data }.to_json)
+				expect(game.players.last).to receive(:send).with({ label => data }.to_json)
+				game.send_data(label, data, game.players)
+			end
+		end
+	end
 end
