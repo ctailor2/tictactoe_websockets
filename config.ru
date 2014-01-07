@@ -1,5 +1,6 @@
+$LOAD_PATH << File.expand_path('./lib')
+require 'tictactoe'
 require './app'
-require './middlewares/websocket_server'
 
 use Server
 
