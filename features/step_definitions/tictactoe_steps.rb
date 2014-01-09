@@ -46,17 +46,17 @@ end
 Given(/^it is UserA's turn$/) do
 end
 
-When(/^I click on the middle space$/) do
-	middle_space = page.find_by_id('5')
-	middle_space.click
+When(/^I click on space (\d+)$/) do |space_number|
+	space = page.find_by_id(space_number)
+	space.click
 end
 
-Then(/^I should see an 'X' in the middle space$/) do
-	middle_space = page.find_by_id('5')
-	expect(middle_space).to have_text('X')
+Then(/^I should see an 'X' in space (\d+)$/) do |space_number|
+	space = page.find_by_id(space_number)
+	expect(space).to have_text('X')
 end
 
-Then(/^I should not see an 'X' in the middle space$/) do
-	middle_space = page.find_by_id('5')
-	expect(middle_space).not_to have_text('X')
+Then(/^I should not see an 'X' in space (\d+)$/) do |space_number|
+	space = page.find_by_id(space_number)
+	expect(space).not_to have_text('X')
 end
