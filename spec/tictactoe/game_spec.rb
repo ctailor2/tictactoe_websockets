@@ -74,8 +74,8 @@ describe Game do
 		context "when the data has the label 'marker_message'" do
 			let(:data) { "{\"marker_message\":2}" }
 
-			it "sends the marker message 2 to both players" do
-				expect(game).to receive(:send_data).with(:marker_message, 2, game.players)
+			it "sends a marker message containing the sender's space number and marker to both players" do
+				expect(game).to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
 				game.receive_data(data)
 			end
 
