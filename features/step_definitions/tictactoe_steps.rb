@@ -55,3 +55,8 @@ Then(/^I should see an 'X' in the middle space$/) do
 	middle_space = page.find_by_id('5')
 	expect(middle_space).to have_text('X')
 end
+
+Then(/^I should not see an 'X' in the middle space$/) do
+	middle_space = page.find_by_id('5')
+	expect(middle_space).not_to have_text('X')
+end
