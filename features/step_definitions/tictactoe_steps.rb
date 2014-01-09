@@ -43,7 +43,14 @@ Given(/^UserA & UserB are playing$/) do
 	Capybara.using_session("UserB") { visit "/" }
 end
 
-Given(/^it is UserA's turn$/) do
+Given(/^it is (User.{1})'s turn$/) do |name|
+end
+
+Given(/^(User.{1}) clicked on space (\d+) on turn (\d+)$/) do |name, space_number, turn_number|
+	Capybara.using_session(name) do
+		space = page.find_by_id(space_number)
+		space.click
+	end
 end
 
 When(/^I click on space (\d+)$/) do |space_number|
@@ -51,12 +58,12 @@ When(/^I click on space (\d+)$/) do |space_number|
 	space.click
 end
 
-Then(/^I should see an 'X' in space (\d+)$/) do |space_number|
+Then(/^I should see an '([XO])' in space (\d+)$/) do |marker, space_number|
 	space = page.find_by_id(space_number)
-	expect(space).to have_text('X')
+	expect(space).to have_text(marker)
 end
 
-Then(/^I should not see an 'X' in space (\d+)$/) do |space_number|
+Then(/^I should not see an '([XO])' in space (\d+)$/) do |marker, space_number|
 	space = page.find_by_id(space_number)
-	expect(space).not_to have_text('X')
+	expect(space).not_to have_text(marker)
 end
