@@ -28,8 +28,9 @@ ws.onmessage = function(message) {
 				$(".game-board").show('slow').css('display', 'inline-block');
 			}
 		case "marker_message":
-			var id = data.marker_message;
-			$("#" + id).text("X");
+			var id = data.marker_message[0];
+			var marker = data.marker_message[1];
+			$("#" + id).text(marker);
 	}
 }
 
