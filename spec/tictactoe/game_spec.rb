@@ -15,6 +15,12 @@ describe Game do
 		end
 	end
 
+	describe "#players" do
+		it "is a collection of Player objects" do
+			expect(game.players.all? { |player| player.is_a?(Player) }).to be_true
+		end
+	end
+
 	describe "#turn!" do
 		it "sends the message 'Your Turn' to the first player" do
 			first_player = game.players.first
@@ -47,7 +53,7 @@ describe Game do
 				label = :data_label
 				data = 'message for single player'
 				player = game.players.first
-				expect(player).to receive(:send).with({ label => data }.to_json)
+				expect(player.client).to receive(:send).with({ label => data }.to_json)
 				game.send_data(label, data, player)
 			end
 		end
@@ -57,8 +63,8 @@ describe Game do
 				label = :data_label
 				data = 'message for multiple players'
 				players = game.players
-				expect(players.first).to receive(:send).with({ label => data }.to_json)
-				expect(players.last).to receive(:send).with({ label => data }.to_json)
+				expect(players.first.client).to receive(:send).with({ label => data }.to_json)
+				expect(players.last.client).to receive(:send).with({ label => data }.to_json)
 				game.send_data(label, data, players)
 			end
 		end

@@ -2,7 +2,10 @@ class Game
 	attr_reader :players
 
 	def initialize(clients)
-		@players = clients
+		@players = []
+		clients.each do |client|
+			players << Player.new(client)
+		end
 		turn!
 		show
 	end
@@ -19,7 +22,7 @@ class Game
 
 	def send_data(label, data, *players)
 		players.flatten.each do |player|
-			player.send({ label => data }.to_json)
+			player.client.send({ label => data }.to_json)
 		end
 	end
 
