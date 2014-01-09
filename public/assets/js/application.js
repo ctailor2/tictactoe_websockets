@@ -25,7 +25,7 @@ ws.onmessage = function(message) {
 		case "display_message":
 			var message = data.display_message;
 			if (message === 'show') {
-				$(".game-board").show('slow').css('display', 'inline-block');
+				$(".game-board").show().css('display', 'inline-block');
 			}
 		case "marker_message":
 			var id = data.marker_message[0];
