@@ -9,7 +9,18 @@ ws.onmessage = function(message) {
 		$(".status").text(data.status);
 	}
 	else if (data.hasOwnProperty('turn_message')) {
-		$(".turn-message").text(data.turn_message);
+		var message = data.turn_message
+		$(".turn-message").text(message);
+		var clickHandler = function() {
+			var id = parseInt(this.id);
+			ws.send(JSON.stringify({ 'marker_message' : id }));
+		}
+		if (message === "Your Turn") {
+			$(".space").bind("click.myEvent", clickHandler);
+		}
+		else {
+			$(".space").unbind("click.myEvent");
+		}
 	}
 	else if (data.hasOwnProperty('display_message')) {
 		var message = data.display_message
@@ -23,9 +34,3 @@ ws.onmessage = function(message) {
 	}
 }
 
-$(function() {
-	$(".space").click(function() {
-		var id = parseInt(this.id)
-		ws.send(JSON.stringify({ 'marker_message' : id }))
-	});
-})
