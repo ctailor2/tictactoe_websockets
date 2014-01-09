@@ -37,3 +37,14 @@ Feature: player places marker
 
 		When I am in UserA's browser
 		Then I should see an 'O' in space 4
+
+	Scenario: first player clicks any space on the opponent's turn
+		Given UserA & UserB are playing
+		And UserA clicked on space 5 on turn 1
+		And it is UserB's turn
+		When I am in UserA's browser
+		And I click on space 4
+		Then I should not see an 'X' in space 4
+
+		When I am in UserB's browser
+		Then I should not see an 'X' in space 4
