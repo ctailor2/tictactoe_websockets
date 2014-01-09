@@ -3,9 +3,8 @@ class Game
 
 	def initialize(clients)
 		@players = []
-		clients.each do |client|
-			players << Player.new(client)
-		end
+		players << Player.new(clients.first, 'X')
+		players << Player.new(clients.last, 'O')
 		turn!
 		show
 	end
@@ -29,7 +28,8 @@ class Game
 	def receive_data(data)
 		parsed_data = JSON.parse(data, :symbolize_names => true)
 		space_number = parsed_data[:marker_message]
-		send_data(:marker_message, space_number, players)
+		# Current turn is of last player because turn! method rotates players
+		send_data(:marker_message, [space_number, players.last.marker], players)
 		turn!
 	end
 end

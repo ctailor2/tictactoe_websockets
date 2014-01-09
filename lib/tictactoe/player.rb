@@ -1,7 +1,8 @@
 class Player
-	attr_reader :client
+	attr_reader :client, :marker
 
-	def initialize(client)
+	def initialize(client, marker)
 		@client = client
+		@marker = marker
 	end
 end
