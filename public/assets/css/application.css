@@ -24,6 +24,8 @@
 	height: 200px;
 	width: 200px;
 	float: left;
+	line-height: 200px;
+	font-size: 100px;
 }
 
 .vert-border {
