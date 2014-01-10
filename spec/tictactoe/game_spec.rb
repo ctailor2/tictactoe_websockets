@@ -13,11 +13,25 @@ describe Game do
 		it "responds to #players" do
 			expect(game).to respond_to(:players)
 		end
+
+		it "responds to #board" do
+			expect(game).to respond_to(:board)
+		end
 	end
 
 	describe "#players" do
 		it "is a collection of Player objects" do
 			expect(game.players.all? { |player| player.is_a?(Player) }).to be_true
+		end
+	end
+
+	describe "#board" do
+		it "has 9 spaces" do
+			expect(game.board.length).to eq(9)
+		end
+
+		it "is initially empty" do
+			expect(game.board.none?).to be_true
 		end
 	end
 
@@ -74,14 +88,42 @@ describe Game do
 		context "when the data has the label 'marker_message'" do
 			let(:data) { "{\"marker_message\":2}" }
 
-			it "sends a marker message containing the sender's space number and marker to both players" do
-				expect(game).to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
-				game.receive_data(data)
+			describe "when the space number is unoccupied" do
+				it "fills in the board space with the sender's marker" do
+					game.receive_data(data)
+					expect(game.board[1]).to eq("X")
+				end
+
+				it "sends a marker message containing the sender's space number and marker to both players" do
+					expect(game).to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
+					game.receive_data(data)
+				end
+
+				it "completes the turn" do
+					expect(game).to receive(:turn!)
+					game.receive_data(data)
+				end
 			end
 
-			it "completes the turn" do
-				expect(game).to receive(:turn!)
-				game.receive_data(data)
+			describe "when the space number is occupied" do
+				before do
+					game.board[1] = "O"
+				end
+
+				it "does not fill in the board space with the sender's marker" do
+					game.receive_data(data)
+					expect(game.board[1]).not_to eq("X")
+				end
+
+				it "does not send a marker message containing the sender's space number and marker to both players" do
+					expect(game).not_to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
+					game.receive_data(data)
+				end
+
+				it "does not complete the turn" do
+					expect(game).not_to receive(:turn!)
+					game.receive_data(data)
+				end
 			end
 		end
 	end
