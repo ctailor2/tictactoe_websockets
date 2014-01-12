@@ -127,4 +127,90 @@ describe Game do
 			end
 		end
 	end
+
+	describe "#win?" do
+		context "when the board has a horizontal win pattern" do
+			patterns = [
+				[1, 2, 3],
+				[4, 5, 6],
+				[7, 8, 9]
+			]
+
+			patterns.each do |spaces|
+				before do
+					spaces.each do |index|
+						game.board[index - 1] = "X"
+					end
+				end
+
+				describe "when the specified player has a winning pattern" do
+					it "returns true" do
+						expect(game.win?(game.players.last)).to be_true
+					end
+				end
+
+				describe "when the specified player does not have a winning pattern" do
+					it "returns false" do
+						expect(game.win?(game.players.first)).to be_false
+					end
+				end
+			end
+		end
+
+		context "when the board has a vertical win pattern" do
+			patterns = [
+				[1, 4, 7],
+				[2, 5, 8],
+				[3, 6, 9]
+			]
+
+			patterns.each do |spaces|
+				before do
+					spaces.each do |index|
+						game.board[index - 1] = "X"
+					end
+				end
+
+				describe "when the specified player has a winning pattern" do
+					it "returns true" do
+						expect(game.win?(game.players.last)).to be_true
+					end
+				end
+
+				describe "when the specified player does not have a winning pattern" do
+					it "returns false" do
+						expect(game.win?(game.players.first)).to be_false
+					end
+				end
+			end
+		end
+
+		context "when the board has a diagonal win pattern" do
+			patterns = [
+				[1, 5, 9],
+				[3, 5, 7]
+			]
+
+			patterns.each do |spaces|
+				before do
+					spaces.each do |index|
+						game.board[index - 1] = "X"
+					end
+				end
+
+				describe "when the specified player has a winning pattern" do
+					it "returns true" do
+						expect(game.win?(game.players.last)).to be_true
+					end
+				end
+
+				describe "when the specified player does not have a winning pattern" do
+					it "returns false" do
+						expect(game.win?(game.players.first)).to be_false
+					end
+				end
+			end
+		end
+	end
+
 end
