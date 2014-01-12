@@ -36,4 +36,23 @@ class Game
 			turn!
 		end
 	end
+
+	def win?(player)
+		marker = player.marker
+		results = []
+		rows = []
+		board.each_slice(3) do |row|
+			rows << row
+		end
+		cols = rows.transpose
+		diags = [board.values_at(2, 4, 6), board.values_at(0, 4, 8)]
+		patterns = rows + cols + diags
+
+		patterns.each do |pattern|
+			results << pattern.all? { |pattern_marker| pattern_marker == marker }
+		end
+
+		results.any?
+	end
+
 end
