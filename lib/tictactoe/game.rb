@@ -33,7 +33,12 @@ class Game
 		if board[space_number - 1].nil?
 			board[space_number - 1] = players.last.marker
 			send_data(:marker_message, [space_number, players.last.marker], players)
-			turn!
+			if win?(players.last)
+				announce_winner(players.last)
+				over
+			else
+				turn!
+			end
 		end
 	end
 
@@ -55,4 +60,14 @@ class Game
 		results.any?
 	end
 
+	def over
+		send_data(:game_message, 'Game Over', players)
+	end
+
+	def announce_winner(player)
+		winner = player
+		loser = players.reject { |player| player == winner }.first
+		send_data(:result_message, 'You Win!', winner)
+		send_data(:result_message, 'You Lose.', loser)
+	end
 end
