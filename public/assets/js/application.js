@@ -11,7 +11,7 @@ ws.onmessage = function(message) {
 			$(".status").text(data.status);
 			break;
 		case "turn_message":
-			var message = data.turn_message
+			var message = data.turn_message;
 			$(".turn-message").text(message);
 			var clickHandler = function() {
 				var id = parseInt(this.id);
