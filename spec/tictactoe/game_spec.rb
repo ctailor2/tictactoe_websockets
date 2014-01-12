@@ -99,9 +99,45 @@ describe Game do
 					game.receive_data(data)
 				end
 
-				it "completes the turn" do
-					expect(game).to receive(:turn!)
-					game.receive_data(data)
+				context "when filling the space results in a win condition for the sender" do
+					before do
+						spaces = [5, 8]
+						spaces.each do |index|
+							game.board[index - 1] = "X"
+						end
+					end
+
+					it "does not complete the turn" do
+						expect(game).not_to receive(:turn!)
+						game.receive_data(data)
+					end
+
+					it "announces the winner" do
+						expect(game).to receive(:announce_winner).with(game.players.last)
+						game.receive_data(data)
+					end
+
+					it "makes the game over" do
+						expect(game).to receive(:over)
+						game.receive_data(data)
+					end
+				end
+
+				context "when filling the space does not result in a win condition for the sender" do
+					it "completes the turn" do
+						expect(game).to receive(:turn!)
+						game.receive_data(data)
+					end
+
+					it "does not announce the winner" do
+						expect(game).not_to receive(:announce_winner).with(game.players.last)
+						game.receive_data(data)
+					end
+
+					it "does not make the game over" do
+						expect(game).not_to receive(:over)
+						game.receive_data(data)
+					end
 				end
 			end
 
@@ -213,4 +249,22 @@ describe Game do
 		end
 	end
 
+	describe "#over" do
+		it "sends the game message 'Game Over' to both players" do
+			expect(game).to receive(:send_data).with(:game_message, 'Game Over', game.players)
+			game.over
+		end
+	end
+
+	describe "#annouce_winner" do
+		it "sends the result message 'You Win!' to the specified player" do
+			expect(game).to receive(:send_data).with(:result_message, 'You Win!', game.players.first)
+			game.announce_winner(game.players.first)
+		end
+
+		it "sends the result message 'You Lose.' to the player that is not specified" do
+			expect(game).to receive(:send_data).with(:result_message, 'You Lose.', game.players.last)
+			game.announce_winner(game.players.first)
+		end
+	end
 end
