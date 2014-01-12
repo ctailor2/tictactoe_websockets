@@ -31,6 +31,14 @@ ws.onmessage = function(message) {
 			var id = data.marker_message[0];
 			var marker = data.marker_message[1];
 			$("#" + id).text(marker);
+		case "result_message":
+			$(".turn-message").text("");
+			var message = data.result_message;
+			$(".result-message").text(message);
+		case "game_message":
+			$(".turn-message").text("");
+			var message = data.game_message;
+			$(".game-message").text(message);
 	}
 }
 
