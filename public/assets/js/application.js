@@ -10,9 +10,9 @@ ws.onmessage = function(message) {
 		case "status":
 			$(".status").text(data.status);
 			break;
-		case "turn_message":
-			var message = data.turn_message;
-			$(".turn-message").text(message);
+		case "player_message":
+			var message = data.player_message;
+			$(".player-message").text(message);
 			var clickHandler = function() {
 				var id = parseInt(this.id);
 				ws.send(JSON.stringify({ 'marker_message' : id }));
@@ -35,13 +35,7 @@ ws.onmessage = function(message) {
 			var marker = data.marker_message[1];
 			$("#" + id).text(marker);
 			break;
-		case "result_message":
-			$(".turn-message").text("");
-			var message = data.result_message;
-			$(".result-message").text(message);
-			break;
 		case "game_message":
-			$(".turn-message").text("");
 			var message = data.game_message;
 			$(".game-message").text(message);
 			break;

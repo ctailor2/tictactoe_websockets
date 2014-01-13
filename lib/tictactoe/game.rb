@@ -11,8 +11,8 @@ class Game
 	end
 
 	def turn!
-		send_data(:turn_message, 'Your Turn', players.first)
-		send_data(:turn_message, "Opponent's Turn", players.last)
+		send_data(:player_message, 'Your Turn', players.first)
+		send_data(:player_message, "Opponent's Turn", players.last)
 		players.rotate!
 	end
 
@@ -67,7 +67,7 @@ class Game
 	def announce_winner(player)
 		winner = player
 		loser = players.reject { |player| player == winner }.first
-		send_data(:result_message, 'You Win!', winner)
-		send_data(:result_message, 'You Lose.', loser)
+		send_data(:player_message, 'You Win!', winner)
+		send_data(:player_message, 'You Lose.', loser)
 	end
 end

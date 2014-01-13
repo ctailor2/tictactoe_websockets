@@ -38,13 +38,13 @@ describe Game do
 	describe "#turn!" do
 		it "sends the message 'Your Turn' to the first player" do
 			first_player = game.players.first
-			expect(game).to receive(:send_data).with(:turn_message, 'Your Turn', first_player)
+			expect(game).to receive(:send_data).with(:player_message, 'Your Turn', first_player)
 			game.turn!
 		end
 
 		it "sends the message 'Opponent's Turn' to the second player" do
 			second_player = game.players.last
-			expect(game).to receive(:send_data).with(:turn_message, "Opponent's Turn", second_player)
+			expect(game).to receive(:send_data).with(:player_message, "Opponent's Turn", second_player)
 			game.turn!
 		end
 
@@ -258,12 +258,12 @@ describe Game do
 
 	describe "#annouce_winner" do
 		it "sends the result message 'You Win!' to the specified player" do
-			expect(game).to receive(:send_data).with(:result_message, 'You Win!', game.players.first)
+			expect(game).to receive(:send_data).with(:player_message, 'You Win!', game.players.first)
 			game.announce_winner(game.players.first)
 		end
 
 		it "sends the result message 'You Lose.' to the player that is not specified" do
-			expect(game).to receive(:send_data).with(:result_message, 'You Lose.', game.players.last)
+			expect(game).to receive(:send_data).with(:player_message, 'You Lose.', game.players.last)
 			game.announce_winner(game.players.first)
 		end
 	end
