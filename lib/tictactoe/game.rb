@@ -30,7 +30,7 @@ class Game
 		parsed_data = JSON.parse(data, :symbolize_names => true)
 		space_number = parsed_data[:marker_message]
 		# Current turn is of last player because turn! method rotates players
-		if board[space_number - 1].nil?
+		unless occupied?(space_number)
 			board[space_number - 1] = players.last.marker
 			send_data(:marker_message, [space_number, players.last.marker], players)
 			if win?(players.last)
@@ -69,5 +69,9 @@ class Game
 		loser = players.reject { |player| player == winner }.first
 		send_data(:player_message, 'You Win!', winner)
 		send_data(:player_message, 'You Lose.', loser)
+	end
+
+	def occupied?(space_number)
+		!board[space_number - 1].nil?
 	end
 end

@@ -87,6 +87,11 @@ describe Game do
 	describe "#fill_space" do
 		let(:data) { "{\"marker_message\":2}" }
 
+		it "checks if the space number is occupied" do
+			expect(game).to receive(:occupied?).with(2)
+			game.fill_space(data)
+		end
+
 		context "when the space number is unoccupied" do
 			it "fills in the board space with the sender's marker" do
 				game.fill_space(data)
@@ -263,6 +268,22 @@ describe Game do
 		it "sends the result message 'You Lose.' to the player that is not specified" do
 			expect(game).to receive(:send_data).with(:player_message, 'You Lose.', game.players.last)
 			game.announce_winner(game.players.first)
+		end
+	end
+
+	describe "#occupied?" do
+		before { game.board[4] = "X" }
+
+		context "when the specified space number is occupied" do
+			it "returns true" do
+				expect(game.occupied?(5)).to be_true
+			end
+		end
+
+		context "when the specified space number is unoccupied" do
+			it "returns false" do
+				expect(game.occupied?(9)).to be_false
+			end
 		end
 	end
 end
