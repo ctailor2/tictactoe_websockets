@@ -26,9 +26,7 @@ class Game
 		end
 	end
 
-	def fill_space(data)
-		parsed_data = JSON.parse(data, :symbolize_names => true)
-		space_number = parsed_data[:marker_message]
+	def fill_space(space_number)
 		# Current turn is of last player because turn! method rotates players
 		unless occupied?(space_number)
 			board[space_number - 1] = players.last.marker
@@ -40,6 +38,12 @@ class Game
 				turn!
 			end
 		end
+	end
+
+	def receive_data(data)
+		parsed_data = JSON.parse(data, :symbolize_names => true)
+		space_number = parsed_data[:marker_message]
+		fill_space(space_number)
 	end
 
 	def win?(player)

@@ -85,22 +85,22 @@ describe Game do
 	end
 
 	describe "#fill_space" do
-		let(:data) { "{\"marker_message\":2}" }
+		let(:space_number) { 2 }
 
 		it "checks if the space number is occupied" do
 			expect(game).to receive(:occupied?).with(2)
-			game.fill_space(data)
+			game.fill_space(space_number)
 		end
 
 		context "when the space number is unoccupied" do
 			it "fills in the board space with the sender's marker" do
-				game.fill_space(data)
+				game.fill_space(space_number)
 				expect(game.board[1]).to eq("X")
 			end
 
 			it "sends a marker message containing the sender's space number and marker to both players" do
 				expect(game).to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
-				game.fill_space(data)
+				game.fill_space(space_number)
 			end
 
 			describe "when filling the space results in a win condition for the sender" do
@@ -113,34 +113,34 @@ describe Game do
 
 				it "does not complete the turn" do
 					expect(game).not_to receive(:turn!)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 
 				it "announces the winner" do
 					expect(game).to receive(:announce_winner).with(game.players.last)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 
 				it "makes the game over" do
 					expect(game).to receive(:over)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 			end
 
 			describe "when filling the space does not result in a win condition for the sender" do
 				it "completes the turn" do
 					expect(game).to receive(:turn!)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 
 				it "does not announce the winner" do
 					expect(game).not_to receive(:announce_winner).with(game.players.last)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 
 				it "does not make the game over" do
 					expect(game).not_to receive(:over)
-					game.fill_space(data)
+					game.fill_space(space_number)
 				end
 			end
 		end
@@ -151,18 +151,18 @@ describe Game do
 			end
 
 			it "does not fill in the board space with the sender's marker" do
-				game.fill_space(data)
+				game.fill_space(space_number)
 				expect(game.board[1]).not_to eq("X")
 			end
 
 			it "does not send a marker message containing the sender's space number and marker to both players" do
 				expect(game).not_to receive(:send_data).with(:marker_message, [2, game.players.last.marker], game.players)
-				game.fill_space(data)
+				game.fill_space(space_number)
 			end
 
 			it "does not complete the turn" do
 				expect(game).not_to receive(:turn!)
-				game.fill_space(data)
+				game.fill_space(space_number)
 			end
 		end
 	end
@@ -284,6 +284,15 @@ describe Game do
 			it "returns false" do
 				expect(game.occupied?(9)).to be_false
 			end
+		end
+	end
+
+	describe "#receive_data" do
+		let(:data) { "{\"marker_message\":2}" }
+
+		it "fills the correct space" do
+			expect(game).to receive(:fill_space).with(2)
+			game.receive_data(data)
 		end
 	end
 end

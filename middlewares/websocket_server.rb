@@ -23,7 +23,7 @@ class Server
       end
 
       ws.on :message do |event|
-        game.fill_space(event.data)
+        game.receive_data(event.data)
       end
 
       ws.on :close do |event|
