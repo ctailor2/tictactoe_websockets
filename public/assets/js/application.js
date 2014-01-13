@@ -34,7 +34,7 @@ ws.onmessage = function(message) {
 			break;
 		case "game_message":
 			var message = data.game_message;
-			$(".game-message").text(message);
+			$(".status").text(message);
 			break;
 	}
 }
