@@ -24,6 +24,12 @@ describe Server do
 		end
 	end
 
+	describe "#num_clients" do
+		it "returns the number of clients connected to the server" do
+			expect(server.num_clients).to eq(2)
+		end
+	end
+
 	describe "#new_game" do
 		it "clears the client's status messages" do
 			expect(server).to receive(:send_data).with(:status, '', server.clients)

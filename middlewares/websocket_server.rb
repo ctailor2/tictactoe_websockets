@@ -39,7 +39,11 @@ class Server
 	end
 
   def new_game_req_met?
-    clients.length == 2
+    num_clients == 2
+  end
+
+  def num_clients
+    clients.length
   end
 
   def new_game
