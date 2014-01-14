@@ -49,12 +49,6 @@ class Game
 	def win?(player)
 		marker = player.marker
 		results = []
-		rows = []
-		board.each_slice(3) do |row|
-			rows << row
-		end
-		cols = rows.transpose
-		diags = [board.values_at(2, 4, 6), board.values_at(0, 4, 8)]
 		patterns = rows + cols + diags
 
 		patterns.each do |pattern|
@@ -62,6 +56,22 @@ class Game
 		end
 
 		results.any?
+	end
+
+	def rows
+		rows = []
+		board.each_slice(3) do |row|
+			rows << row
+		end
+		rows
+	end
+
+	def cols
+		rows.transpose
+	end
+
+	def diags
+		[board.values_at(2, 4, 6), board.values_at(0, 4, 8)]
 	end
 
 	def over

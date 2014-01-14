@@ -295,4 +295,40 @@ describe Game do
 			game.receive_data(data)
 		end
 	end
+
+	describe "#rows" do
+		before do
+			[1, 4, 7].each do |space|
+				game.board[space - 1] = "X"
+			end
+		end
+
+		it "returns the rows of the board" do
+			expect(game.rows).to eq([["X", nil, nil], ["X", nil, nil], ["X", nil, nil]])
+		end
+	end
+
+	describe "#cols" do
+		before do
+			[1, 2, 3].each do |space|
+				game.board[space - 1] = "X"
+			end
+		end
+
+		it "returns the columns of the board" do
+			expect(game.cols).to eq([["X", nil, nil], ["X", nil, nil], ["X", nil, nil]])
+		end
+	end
+
+	describe "#diags" do
+		before do
+			[1, 3, 7, 9].each do |space|
+				game.board[space - 1] = "X"
+			end
+		end
+
+		it "returns the diagonals of the board" do
+			expect(game.diags).to eq([["X", nil, "X"], ["X", nil, "X"]])
+		end
+	end
 end
