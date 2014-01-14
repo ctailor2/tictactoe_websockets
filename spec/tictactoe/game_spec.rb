@@ -106,8 +106,8 @@ describe Game do
 			describe "when filling the space results in a win condition for the sender" do
 				before do
 					spaces = [5, 8]
-					spaces.each do |index|
-						game.board[index - 1] = "X"
+					spaces.each do |space|
+						game.board[space - 1] = "X"
 					end
 				end
 
@@ -177,8 +177,8 @@ describe Game do
 
 			patterns.each do |spaces|
 				before do
-					spaces.each do |index|
-						game.board[index - 1] = "X"
+					spaces.each do |space|
+						game.board[space - 1] = "X"
 					end
 				end
 
@@ -205,8 +205,8 @@ describe Game do
 
 			patterns.each do |spaces|
 				before do
-					spaces.each do |index|
-						game.board[index - 1] = "X"
+					spaces.each do |space|
+						game.board[space - 1] = "X"
 					end
 				end
 
@@ -232,8 +232,8 @@ describe Game do
 
 			patterns.each do |spaces|
 				before do
-					spaces.each do |index|
-						game.board[index - 1] = "X"
+					spaces.each do |space|
+						game.board[space - 1] = "X"
 					end
 				end
 
