@@ -168,6 +168,12 @@ describe Game do
 	end
 
 	describe "#win?" do
+		context "when the board has no win patterns" do
+			it "returns false" do
+				expect(game.win?).to be_false
+			end
+		end
+
 		context "when the board has a horizontal win pattern" do
 			patterns = [
 				[1, 2, 3],
@@ -175,22 +181,16 @@ describe Game do
 				[7, 8, 9]
 			]
 
-			patterns.each do |spaces|
+			patterns.each_with_index do |pattern, index|
 				before do
-					spaces.each do |space|
+					pattern.each do |space|
 						game.board[space - 1] = "X"
 					end
 				end
 
-				describe "when the specified player has a winning pattern" do
+				describe "in row #{index + 1}" do
 					it "returns true" do
-						expect(game.win?(game.players.last)).to be_true
-					end
-				end
-
-				describe "when the specified player does not have a winning pattern" do
-					it "returns false" do
-						expect(game.win?(game.players.first)).to be_false
+						expect(game.win?).to be_true
 					end
 				end
 			end
@@ -203,22 +203,16 @@ describe Game do
 				[3, 6, 9]
 			]
 
-			patterns.each do |spaces|
+			patterns.each_with_index do |pattern, index|
 				before do
-					spaces.each do |space|
+					pattern.each do |space|
 						game.board[space - 1] = "X"
 					end
 				end
 
-				describe "when the specified player has a winning pattern" do
+				describe "in column #{index + 1}" do
 					it "returns true" do
-						expect(game.win?(game.players.last)).to be_true
-					end
-				end
-
-				describe "when the specified player does not have a winning pattern" do
-					it "returns false" do
-						expect(game.win?(game.players.first)).to be_false
+						expect(game.win?).to be_true
 					end
 				end
 			end
@@ -230,22 +224,16 @@ describe Game do
 				[3, 5, 7]
 			]
 
-			patterns.each do |spaces|
+			patterns.each_with_index do |pattern, index|
 				before do
-					spaces.each do |space|
+					pattern.each do |space|
 						game.board[space - 1] = "X"
 					end
 				end
 
-				describe "when the specified player has a winning pattern" do
+				describe "for pattern #{index + 1}" do
 					it "returns true" do
-						expect(game.win?(game.players.last)).to be_true
-					end
-				end
-
-				describe "when the specified player does not have a winning pattern" do
-					it "returns false" do
-						expect(game.win?(game.players.first)).to be_false
+						expect(game.win?).to be_true
 					end
 				end
 			end

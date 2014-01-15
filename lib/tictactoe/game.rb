@@ -31,7 +31,7 @@ class Game
 		unless occupied?(space_number)
 			board[space_number - 1] = players.last.marker
 			send_data(:marker_message, [space_number, players.last.marker], players)
-			if win?(players.last)
+			if win?
 				announce_winner(players.last)
 				over
 			else
@@ -46,16 +46,12 @@ class Game
 		fill_space(space_number)
 	end
 
-	def win?(player)
-		marker = player.marker
-		results = []
+	def win?
 		patterns = rows + cols + diags
 
-		patterns.each do |pattern|
-			results << pattern.all? { |pattern_marker| pattern_marker == marker }
+		patterns.any? do |pattern|
+			pattern.uniq.length == 1 && pattern.uniq.first != nil
 		end
-
-		results.any?
 	end
 
 	def rows
