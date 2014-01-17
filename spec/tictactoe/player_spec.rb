@@ -23,4 +23,11 @@ describe Player do
 			end
 		end
 	end
+
+	describe "#disconnect" do
+		it "closes the client connection" do
+			expect(player.client).to receive(:close)
+			player.disconnect
+		end
+	end
 end
