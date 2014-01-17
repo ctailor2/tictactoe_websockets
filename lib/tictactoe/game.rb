@@ -75,6 +75,7 @@ class Game
 
 	def over
 		send_data(:game_message, 'Game Over', players)
+		disconnect
 	end
 
 	def announce_winner(player)
@@ -94,5 +95,11 @@ class Game
 
 	def announce_draw
 		send_data(:player_message, 'Draw.', players)
+	end
+
+	def disconnect
+		players.each do |player|
+			player.disconnect
+		end
 	end
 end
