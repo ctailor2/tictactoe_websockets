@@ -127,7 +127,36 @@ describe Game do
 				end
 			end
 
-			describe "when it does not result in a win condition" do
+			describe "when it results in a draw condition" do
+				before do
+					x_spaces = [1, 6, 7, 8]
+					x_spaces.each do |space|
+						game.board[space - 1] = "X"
+					end
+
+					o_spaces = [5, 3, 4, 9]
+					o_spaces.each do |space|
+						game.board[space - 1] = "O"
+					end
+				end
+
+				it "does not complete the turn" do
+					expect(game).not_to receive(:turn!)
+					game.fill_space(space_number)
+				end
+
+				it "announces the draw" do
+					expect(game).to receive(:announce_draw).with(no_args())
+					game.fill_space(space_number)
+				end
+
+				it "makes the game over" do
+					expect(game).to receive(:over)
+					game.fill_space(space_number)
+				end
+			end
+
+			describe "when it does not result in either a win or draw condition" do
 				it "completes the turn" do
 					expect(game).to receive(:turn!)
 					game.fill_space(space_number)
@@ -317,6 +346,44 @@ describe Game do
 
 		it "returns the diagonals of the board" do
 			expect(game.diags).to eq([["X", nil, "X"], ["X", nil, "X"]])
+		end
+	end
+
+	describe "#draw?" do
+		before do
+			x_spaces = [1, 6, 7, 8]
+			x_spaces.each do |space|
+				game.board[space - 1] = "X"
+			end
+
+			o_spaces = [5, 3, 4, 9]
+			o_spaces.each do |space|
+				game.board[space - 1] = "O"
+			end
+		end
+
+		context "when the board is not full" do
+			it "returns false" do
+				expect(game.draw?).to be_false
+			end
+		end
+
+		context "when the board is full" do
+			before do
+				space = 2
+				game.board[space - 1] = "X"
+			end
+
+			it "returns true" do
+				expect(game.draw?).to be_true
+			end
+		end
+	end
+
+	describe "#announce_draw" do
+		it "sends the result message 'Draw.' to both players" do
+			expect(game).to receive(:send_data).with(:player_message, 'Draw.', game.players)
+			game.announce_draw
 		end
 	end
 end
