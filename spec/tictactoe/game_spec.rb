@@ -103,7 +103,7 @@ describe Game do
 				game.fill_space(space_number)
 			end
 
-			describe "when filling the space results in a win condition for the sender" do
+			describe "when it results in a win condition" do
 				before do
 					spaces = [5, 8]
 					spaces.each do |space|
@@ -127,7 +127,7 @@ describe Game do
 				end
 			end
 
-			describe "when filling the space does not result in a win condition for the sender" do
+			describe "when it does not result in a win condition" do
 				it "completes the turn" do
 					expect(game).to receive(:turn!)
 					game.fill_space(space_number)
