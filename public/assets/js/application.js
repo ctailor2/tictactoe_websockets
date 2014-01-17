@@ -9,9 +9,10 @@ ws.onmessage = function(message) {
 	switch (data_label) {
 		case "status":
 			$(".status").text(data.status);
-		case "turn_message":
-			var message = data.turn_message
-			$(".turn-message").text(message);
+			break;
+		case "player_message":
+			var message = data.player_message;
+			$(".player-message").text(message);
 			var clickHandler = function() {
 				var id = parseInt(this.id);
 				ws.send(JSON.stringify({ 'marker_message' : id }));
@@ -22,15 +23,19 @@ ws.onmessage = function(message) {
 			else {
 				$(".space").unbind("click.myEvent");
 			}
+			break;
 		case "display_message":
-			var message = data.display_message;
-			if (message === 'show') {
-				$(".game-board").show().css('display', 'inline-block');
-			}
+			$(".game-board").show().css('display', 'inline-block');
+			break;
 		case "marker_message":
 			var id = data.marker_message[0];
 			var marker = data.marker_message[1];
 			$("#" + id).text(marker);
+			break;
+		case "game_message":
+			var message = data.game_message;
+			$(".status").text(message);
+			break;
 	}
 }
 
