@@ -44,10 +44,6 @@ class Server
 		end
 	end
 
-  def new_game_req_met?
-    num_clients == 2
-  end
-
   def num_clients
     clients.length
   end
