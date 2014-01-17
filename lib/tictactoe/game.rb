@@ -34,6 +34,9 @@ class Game
 			if win?
 				announce_winner(players.last)
 				over
+			elsif draw?
+				announce_draw
+				over
 			else
 				turn!
 			end
@@ -83,5 +86,13 @@ class Game
 
 	def occupied?(space_number)
 		!board[space_number - 1].nil?
+	end
+
+	def draw?
+		board.all?
+	end
+
+	def announce_draw
+		send_data(:player_message, 'Draw.', players)
 	end
 end
