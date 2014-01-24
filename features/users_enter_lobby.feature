@@ -33,11 +33,7 @@ Feature: users enter lobby
 			| UserA |
 			| UserB |
 			| UserC |
-		When I am in UserA's browser
-		And I enter the lobby
-
-		When I am in UserB's browser
-		And I enter the lobby
+		And UserA & UserB are playing
 
 		When I am in UserC's browser
 		And I enter the lobby
