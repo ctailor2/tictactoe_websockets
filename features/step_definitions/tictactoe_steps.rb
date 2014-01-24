@@ -30,12 +30,12 @@ end
 
 Then(/^a new game should not have started$/) do
 	server = page.driver.app
-	expect(server.game).to be_nil
+	expect(server.game.board.any?).to be_true
 end
 
 Then(/^a new game should have started$/) do
 	server = page.driver.app
-	expect(server.game).to be_an_instance_of(Game)
+	expect(server.game.board.any?).to be_false
 end
 
 Given(/^UserA & UserB are playing$/) do

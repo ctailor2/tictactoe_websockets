@@ -8,22 +8,6 @@ describe Server do
 		end
 	end
 
-	describe "#new_game_req_met?" do
-		context "when there are exactly 2 clients" do
-			it "returns true" do
-				expect(server.new_game_req_met?).to be_true
-			end
-		end
-
-		context "when there are not exactly 2 clients" do
-			before { server.clients.pop }
-
-			it "returns false" do
-				expect(server.new_game_req_met?).to be_false
-			end
-		end
-	end
-
 	describe "#num_clients" do
 		it "returns the number of clients connected to the server" do
 			expect(server.num_clients).to eq(2)

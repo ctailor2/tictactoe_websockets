@@ -5,4 +5,8 @@ class Player
 		@client = client
 		@marker = marker
 	end
+
+	def disconnect
+		client.close
+	end
 end

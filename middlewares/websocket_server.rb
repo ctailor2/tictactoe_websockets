@@ -18,8 +18,14 @@ class Server
       ws.on :open do |event|
         p [:open, ws.object_id]
         clients << ws
-        new_game if new_game_req_met?
-        send_data(:status, 'Waiting for Challenger', ws) unless game
+        case num_clients
+        when 1
+          send_data(:status, 'Waiting for Challenger', ws)
+        when 2
+          new_game
+        else
+          send_data(:status, 'Game in Progress - Please try again later.', ws)
+        end
       end
 
       ws.on :message do |event|
@@ -37,10 +43,6 @@ class Server
 			@app.call(env)
 		end
 	end
-
-  def new_game_req_met?
-    num_clients == 2
-  end
 
   def num_clients
     clients.length

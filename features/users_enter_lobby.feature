@@ -13,7 +13,7 @@ Feature: users enter lobby
 		Then I should see "Welcome to TicTacToe!"
 		And I should see "Waiting for Challenger"
 		And a new game should not have started
-		But I should not see the game board
+		And I should not see the game board
 
 		When I am in UserB's browser
 		And I enter the lobby
@@ -26,3 +26,16 @@ Feature: users enter lobby
 		When I am in UserA's browser
 		Then I should see "Your Turn"
 		But not "Waiting for Challenger"
+
+	Scenario: more than two users enter the lobby
+		Given the following users exist:
+			| Name  |
+			| UserA |
+			| UserB |
+			| UserC |
+		And UserA & UserB are playing
+
+		When I am in UserC's browser
+		And I enter the lobby
+		Then I should see "Welcome to TicTacToe!"
+		And I should see "Game in Progress - Please try again later."

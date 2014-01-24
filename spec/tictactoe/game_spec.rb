@@ -274,6 +274,11 @@ describe Game do
 			expect(game).to receive(:send_data).with(:game_message, 'Game Over', game.players)
 			game.over
 		end
+
+		it "disconnects" do
+			expect(game).to receive(:disconnect)
+			game.over
+		end
 	end
 
 	describe "#annouce_winner" do
@@ -384,6 +389,14 @@ describe Game do
 		it "sends the result message 'Draw.' to both players" do
 			expect(game).to receive(:send_data).with(:player_message, 'Draw.', game.players)
 			game.announce_draw
+		end
+	end
+
+	describe "#disconnect" do
+		it "disconnects each player" do
+			expect(game.players.first).to receive(:disconnect)
+			expect(game.players.last).to receive(:disconnect)
+			game.disconnect
 		end
 	end
 end
